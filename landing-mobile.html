@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WriteEasy - Assistant E-mail</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-attachment: scroll;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            background: none;
+            margin: 0;
+            padding: 32px 24px;
+            width: 100%;
+            min-height: 100vh;
+            max-width: none;
+            border-radius: 0;
+            box-shadow: none;
+            border: none;
+            backdrop-filter: none;
+        }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url('images/happy.jpg');
+            background-size: cover;
+            
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+            background-blend-mode: multiply;
+        }
+
+        .container > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .logo-container {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #d4a574 0%, #c8956d 100%);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            box-shadow: 0 8px 24px rgba(212, 165, 116, 0.4);
+        }
+
+        .logo-container::after {
+            content: '✉️';
+            font-size: 32px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .logo-container::before {
+            content: '';
+            position: absolute;
+            inset: -2px;
+            background: linear-gradient(135deg, #d4a574, #c8956d, #b8865f);
+            border-radius: 22px;
+            z-index: -1;
+            animation: rotate 8s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .app-name {
+            font-size: 32px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+        }
+
+        .tagline {
+            font-size: 17px;
+            color: #ffffff;
+            line-height: 1.5;
+            margin-bottom: 24px;
+            font-weight: 600;
+            text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.8);
+            background: rgba(0, 0, 0, 0.2);
+            padding: 8px 12px;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+        }
+
+        .value-props {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .value-prop {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 20px 16px;
+            border-radius: 16px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .value-prop:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            background: rgba(255, 255, 255, 0.98);
+        }
+
+        .value-prop-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .value-prop-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: #4a3728;
+            margin-bottom: 4px;
+        }
+
+        .value-prop-desc {
+            font-size: 12px;
+            color: #5a412f;
+            line-height: 1.3;
+            font-weight: 500;
+        }
+
+        .testimonial {
+            background: rgba(139, 69, 19, 0.95);
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            color: white;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .testimonial::before {
+            content: '"';
+            font-size: 48px;
+            position: absolute;
+            top: -8px;
+            left: 16px;
+            opacity: 0.3;
+            font-family: serif;
+        }
+
+        .testimonial-text {
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 12px;
+            font-style: italic;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+            font-weight: 500;
+        }
+
+        .testimonial-author {
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        .cta-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 16px 24px;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 700;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #d4a574 0%, #c8956d 100%);
+            color: white;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.95);
+            color: #4a3728;
+            border: 2px solid rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(212, 165, 116, 0.9);
+            color: white;
+            transform: translateY(-1px);
+            border-color: transparent;
+        }
+
+        .trust-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            margin-top: 24px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 16px;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 12px;
+            color: #4a3728;
+            font-weight: 600;
+        }
+
+        .trust-icon {
+            color: #d4a574;
+            font-size: 14px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .container > * {
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .hero-section { animation-delay: 0.1s; }
+        .value-props { animation-delay: 0.2s; }
+        .testimonial { animation-delay: 0.3s; }
+        .cta-section { animation-delay: 0.4s; }
+        .trust-section { animation-delay: 0.5s; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="hero-section">
+            <div class="logo-container"></div>
+            <h1 class="app-name">WriteEasy</h1>
+            <p class="tagline">Écrivez naturellement, nous nous occupons du style parfait pour chaque situation</p>
+        </div>
+
+        <div class="value-props">
+            <div class="value-prop">
+                <span class="value-prop-icon">🎨</span>
+                <div class="value-prop-title">Styles adaptés</div>
+                <div class="value-prop-desc">Professionnel, amical, formel ou décontracté</div>
+            </div>
+            <div class="value-prop">
+                <span class="value-prop-icon">⚡</span>
+                <div class="value-prop-title">Ultra rapide</div>
+                <div class="value-prop-desc">Résultats en quelques secondes</div>
+            </div>
+            <div class="value-prop">
+                <span class="value-prop-icon">🧠</span>
+                <div class="value-prop-title">IA intelligente</div>
+                <div class="value-prop-desc">Comprend le contexte et l'intention</div>
+            </div>
+            <div class="value-prop">
+                <span class="value-prop-icon">📱</span>
+                <div class="value-prop-title">Simple d'usage</div>
+                <div class="value-prop-desc">Interface intuitive et fluide</div>
+            </div>
+        </div>
+
+        <div class="testimonial">
+            <div class="testimonial-text">
+                Fini les blocages ! Je tape mes idées en vrac et l'app me sort des e-mails parfaits. Un gain de temps énorme !
+            </div>
+            <div class="testimonial-author">— Sarah, Chef de projet</div>
+        </div>
+
+        <div class="cta-section">
+            <button class="btn btn-primary" onclick="showDemo()">
+                Commencer gratuitement
+            </button>
+            <button class="btn btn-secondary" onclick="showDemo()">
+                J'ai déjà un compte
+            </button>
+        </div>
+
+        <div class="trust-section">
+            <div class="trust-item">
+                <span class="trust-icon">🔒</span>
+                <span>Sécurisé</span>
+            </div>
+            <div class="trust-item">
+                <span class="trust-icon">⭐</span>
+                <span>4.8/5</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showDemo() {
+            document.querySelector('.container').style.transform = 'scale(0.98)';
+            document.querySelector('.container').style.opacity = '0.9';
+            
+            setTimeout(() => {
+                alert('Redirection vers l\'authentification...');
+                document.querySelector('.container').style.transform = 'scale(1)';
+                document.querySelector('.container').style.opacity = '1';
+            }, 200);
+        }
+
+        // Vérification du chargement de l'image de fond
+        window.addEventListener('load', function() {
+            const img = new Image();
+            img.onload = function() {
+                console.log('Image de fond chargée avec succès');
+                document.querySelector('.container').classList.add('image-loaded');
+            };
+            img.onerror = function() {
+                console.log('Erreur de chargement de l\'image, fallback vers gradient');
+                document.querySelector('.container').style.setProperty('--fallback-bg', 'linear-gradient(135deg, #f4f1eb 0%, #e8dcc6 100%)');
+            };
+            img.src = 'images/happy.jpg';
+        });
+    </script>
+</body>
+</html>
